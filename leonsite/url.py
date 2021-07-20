@@ -16,5 +16,7 @@ urlpatterns = [
     path('filelist', views.FileListView.as_view()),
     path('exit', views.ExitView.as_view()),
     path('usercenter', views.UserCenterView.as_view()),
+    path('upload/', views.UploadView.as_view())
+
 ]
 

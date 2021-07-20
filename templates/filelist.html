@@ -6,8 +6,43 @@
 
 {% block body %}
 
+    <table border="1" cellpadding="4" cellspacing="0">
+        <tr>
+        <th>序号</th>
+        <th>文件名</th>
+        <th>大小</th>
+        <th>上传时间</th>
+        <th>上传者</th>
+        <th>操作</th>
+        </tr>
 
-    
+        {% for f in filelist %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ f.file }}</td>
+                <td>{{ f.size }}</td>
+                <td>{{ f.uptime }}</td>
+                <td>{{ f.author.name }}</td>
+                <td>
+                    <span val="{{ f.file }}" class="del">删除</span>
+                    <span class="down"><a href="download?file={{ f.file }}">下载</a></span>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+    </table>
+
+
+    <form action="/upload/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="file">文件：</label><input type="file" name="file" id="file"/>
+
+        <input type="submit" id="upload" value="上传">
+        <p class="tips"></p>
+
+    </form>
 
 
 {% endblock %}

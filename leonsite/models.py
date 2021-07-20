@@ -6,9 +6,10 @@ class User(models.Model):
     password = models.CharField(max_length=10)
 
 class File(models.Model):
-    name = models.FileField(upload_to='files')
+    file = models.FileField(upload_to='files')
     author = models.ForeignKey(User,on_delete=models.DO_NOTHING)
     size = models.CharField(max_length=10)
     downsum = models.IntegerField(default=0)
     ishide = models.BooleanField(default=False)
     isdelete = models.BooleanField(default=False)
+    uptime = models.DateTimeField(auto_now_add=True)
