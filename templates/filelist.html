@@ -8,7 +8,7 @@
 
 {% block body %}
 
-    <table border="1" cellpadding="4" cellspacing="0" >
+    <table class="table table-striped table-hover">
         <tr>
         <th>序号</th>
         <th>文件名</th>
@@ -40,22 +40,24 @@
 
 
     </table>
-
+    <br>
 
     <form action="/upload/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <label for="file">文件：</label><input type="file" name="file" id="file"/>
 
-        <label for="description">描述：</label><textarea name="description" id="description" cols="30" rows="10"></textarea>
+  <input class="form-control" type="file" id="formFile" name="file">
+  <textarea class="form-control" id="description" name="description" placeholder="请输入文件描述" rows="3"></textarea>
 
-        <input type="submit" id="upload" value="上传">
+
+
+        <input type="submit" id="upload" class="button" data-micron="pop" value="上传">
         <p class="tips"></p>
 
     </form>
 
     <div>
-        <a href="/usercenter">用户中心</a>
+        <a href="/usercenter" class="button" data-micron="Flicker">用户中心</a>
     </div>
 
 

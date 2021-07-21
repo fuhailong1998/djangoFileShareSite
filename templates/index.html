@@ -1,15 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block head %}
     <meta charset="UTF-8">
     <title>登录 - Leon.Fu</title>
+    <style>
+
+    </style>
+    <link rel='stylesheet' href='{% static "css/micron.min.css" %}'>
+
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+
+    <script src='{% static "js/micron.min.js" %}'></script>
 {% endblock %}
 
 {% block body %}
-<form action="" method="post">
-{% csrf_token %}
-    <label for="name">用户名:</label><input type="text" name="name" id="name"><br>
-    <label for="password">密码:</label><input type="password" name="password" id="password"><br>
-    <input type="submit" value="登录">
-</form>
+
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+
+            <input type="text" class="form-control" style="width: 320px;text-align: center;margin: 30px auto" id="name" name="name" placeholder="请输入用户名">
+
+        </div>
+        <div class="mb-3">
+
+            <input type="password" class="form-control" style="width: 320px;text-align: center;margin: 30px auto" id="password" name="password" placeholder="请输入密码">
+
+        </div>
+
+        <button type="submit" class="button" data-micron="bounce">登录</button>
+
+
+    </form>
 {% endblock %}
 
