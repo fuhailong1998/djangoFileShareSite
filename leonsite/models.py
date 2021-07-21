@@ -7,7 +7,8 @@ class User(models.Model):
 
 class File(models.Model):
     file = models.FileField(upload_to='files')
-    author = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    description = models.TextField(null=True)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     size = models.CharField(max_length=10)
     downsum = models.IntegerField(default=0)
     ishide = models.BooleanField(default=False)

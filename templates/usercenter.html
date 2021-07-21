@@ -1,12 +1,40 @@
 {% extends 'base.html' %}
+{% load filenamecut %}
 {% block head %}
     <meta charset="UTF-8">
-    <title>UserCenter - Leon.Fu</title>
+    <title>用户中心 - Leon.Fu</title>
 {% endblock %}
 
 {% block body %}
+    <table border="1" cellpadding="4" cellspacing="0" >
+        <tr>
+        <th>序号</th>
+        <th>文件名</th>
+        <th>大小</th>
+        <th>上传时间</th>
+        <th>下载次数</th>
+        <th>操作</th>
+        </tr>
 
-    <a href="/exit">Exit</a>
+        {% for f in filelist %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ f.file|filenamecut }}</td>
+                <td>{{ f.size }}</td>
+                <td>{{ f.uptime }}</td>
+                <td>{{ f.downsum }}</td>
+                <td>
+                    {% if f.author.id == current_user %}
+                    删除 隐藏
+                    {% endif %}
+                    <span class="down"><a href="download/file={{ f.file }}">下载</a></span>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+    </table>
+    <a href="/exit">退出登录</a>
 
 {% endblock %}
 

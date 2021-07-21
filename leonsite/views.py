@@ -72,13 +72,16 @@ class FileListView(View):
     @isLogin
     def get(self, request, user=None):
         filelist = File.objects.all()
-        return render(request, 'filelist.html', {'filelist':filelist})
+        current_user = request.session['login']
+        return render(request, 'filelist.html', {'filelist': filelist, 'current_user': current_user})
 
 
 class UserCenterView(View):
     @isLogin
     def get(self, request, user=None):
-        return render(request, 'usercenter.html')
+        author = User.objects.get(id=request.session['login'])
+        filelist = File.objects.filter(author=author)
+        return render(request, 'usercenter.html', {'filelist':filelist})
 
 
 class UploadView(View):
@@ -89,31 +92,37 @@ class UploadView(View):
         def post(self, request):
             file = request.FILES.get('file', '')
 
+            description = request.POST.get('description', '')
+
             size = StrOfSize(file.size)
 
             author = User.objects.get(id=request.session['login'])
 
             # 入库操作
-            File.objects.create(author=author, file=file, size=size)
+            File.objects.create(author=author, description=description, file=file, size=size)
             return HttpResponse("上传成功！")
 
 
 
-class Download(View):
-    def get(self, request):
-        file = request.GET.get('file', '')
+class DownloadView(View):
+    def get(self, request, file=None):
+        # file = request.GET.get('file', '')
+
+        print(file)
 
         num = File.objects.get(file=str(file))
         f = File.objects.filter(file=str(file))
 
 
-        if f.filter(is_delete=True):
-            return HttpResponse("文件不存在或已删除！")
+        if f.filter(isdelete=True):
+            return HttpResponse("文件已删除！")
+        elif f.filter(ishide=True):
+            return HttpResponse("文件已被发布者隐藏！")
         else:
-            f.update(down=num.down + 1)
+            f.update(downsum=num.downsum + 1)
             filename = file[file.rindex('/') + 1:]
 
-            with open(os.path.join(os.getcwd(), 'media', file.replace('/', '\\')), 'rb') as fr:
+            with open(os.path.join(os.getcwd(), 'media', file), 'rb') as fr:
                 response = HttpResponse(fr.read())
                 response['Content-Type'] = 'application/octet-stream'
                 response['Content-Disposition'] = 'attachment;filename=' + filename
@@ -124,6 +133,6 @@ class Delete(View):
     def get(self, request):
         file = request.GET.get('file', '')
 
-        File.objects.filter(file=str(file)).update(is_delete=True)
+        File.objects.filter(file=str(file)).update(isdelete=True)
 
         return JsonResponse({'flag': True})

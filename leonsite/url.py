@@ -7,7 +7,7 @@
 @description : 
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from leonsite import views
 
@@ -16,7 +16,8 @@ urlpatterns = [
     path('filelist', views.FileListView.as_view()),
     path('exit', views.ExitView.as_view()),
     path('usercenter', views.UserCenterView.as_view()),
-    path('upload/', views.UploadView.as_view())
+    path('upload/', views.UploadView.as_view()),
+    re_path('^download/file=(.*)$', views.DownloadView.as_view(), name="file"),
 
 ]
 

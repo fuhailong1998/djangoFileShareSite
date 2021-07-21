@@ -1,31 +1,39 @@
 {% extends 'base.html' %}
+{% load filenamecut %}
+
 {% block head %}
     <meta charset="UTF-8">
-    <title>FIleList - Leon.Fu</title>
+    <title>文件列表 - Leon.Fu</title>
 {% endblock %}
 
 {% block body %}
 
-    <table border="1" cellpadding="4" cellspacing="0">
+    <table border="1" cellpadding="4" cellspacing="0" >
         <tr>
         <th>序号</th>
         <th>文件名</th>
+        <th>描述</th>
         <th>大小</th>
         <th>上传时间</th>
         <th>上传者</th>
+        <th>下载次数</th>
         <th>操作</th>
         </tr>
 
         {% for f in filelist %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ f.file }}</td>
+                <td>{{ f.file|filenamecut }}</td>
+                <td>{{ f.description }}</td>
                 <td>{{ f.size }}</td>
                 <td>{{ f.uptime }}</td>
                 <td>{{ f.author.name }}</td>
+                <td>{{ f.downsum }}</td>
                 <td>
-                    <span val="{{ f.file }}" class="del">删除</span>
-                    <span class="down"><a href="download?file={{ f.file }}">下载</a></span>
+                    {% if f.author.id == current_user %}
+                    删除 隐藏
+                    {% endif %}
+                    <span class="down"><a href="download/file={{ f.file }}">下载</a></span>
                 </td>
             </tr>
         {% endfor %}
@@ -39,10 +47,16 @@
 
         <label for="file">文件：</label><input type="file" name="file" id="file"/>
 
+        <label for="description">描述：</label><textarea name="description" id="description" cols="30" rows="10"></textarea>
+
         <input type="submit" id="upload" value="上传">
         <p class="tips"></p>
 
     </form>
+
+    <div>
+        <a href="/usercenter">用户中心</a>
+    </div>
 
 
 {% endblock %}
