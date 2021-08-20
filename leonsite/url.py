@@ -18,6 +18,7 @@ urlpatterns = [
     path('usercenter', views.UserCenterView.as_view()),
     path('upload/', views.UploadView.as_view()),
     re_path('^download/file=(.*)$', views.DownloadView.as_view(), name="file"),
+    path('changepassword', views.ChangePassword.as_view())
 
 ]
 

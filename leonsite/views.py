@@ -136,3 +136,8 @@ class Delete(View):
         File.objects.filter(file=str(file)).update(isdelete=True)
 
         return JsonResponse({'flag': True})
+
+
+class ChangePassword(View):
+    def get(self, request):
+        return render(request, 'changepassword.html')

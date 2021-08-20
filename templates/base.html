@@ -53,12 +53,21 @@
             background-image: linear-gradient(-45deg, #549651 0, #15a05e 100%);
             box-shadow: 0 3px 13px 0 rgba(162, 174, 73, 0.2), 0 11px 21px 0 rgba(82, 80, 58, 0.004);
         }
+        #footer{
+
+        }
+        #title{
+            color: darkgreen;
+            font-weight: bolder;
+        }
     </style>
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/jquery-3.6.0.min.js" %}"></script>
-
-
+    <link rel='stylesheet' href='{% static "css/micron.min.css" %}'>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <script src='{% static "js/micron.min.js" %}'></script>
+    <script src='{% static "js/bootbox.min.js" %}'></script>
 </head>
 
 <body>
@@ -69,10 +78,18 @@
 
 <div class="main_content">
     <img src="{% static "imgs/100.png" %}" class="img-fluid" alt="...">
-
+    <div id="title">
+        <h3>F组的资源小站</h3>
+    </div>
     {% block body %}
 
     {% endblock %}
+
+<div id="footer">
+    <span>
+        Powered by <a href="https://fxkxb.com" target="_blank">Leon</a>
+    </span>
+</div>
 </div>
 
 </body>
@@ -105,5 +122,7 @@
                 });
         });
     });
+
 </script>
+
 </html>
